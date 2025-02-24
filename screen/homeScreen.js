@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
-export default function HomeScreen() {
+export default function Home() {
   return (
     <>
       <View style={style.textInputBox}>
