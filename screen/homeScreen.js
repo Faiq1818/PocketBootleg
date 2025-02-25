@@ -9,8 +9,11 @@ import {
 export default function Home() {
   const [nim, setNim] = useState("");
   const [token, setToken] = useState("");
+  const [status, setStatus] = useState(""); // State untuk status presensi
 
   const sendPresensi = async () => {
+    setStatus("Mengirim..."); // Menampilkan status saat request dikirim
+
     try {
       const response = await fetch(
         "https://api.itera.ac.id/v2/presensi/kelas",
@@ -31,8 +34,14 @@ export default function Home() {
 
       const data = await response.json();
       console.log("Response:", data);
+
+      if (response.ok) {
+        setStatus(`✅ Berhasil: ${data.msg || "Presensi berhasil!"}`);
+      } else {
+        setStatus(`❌ Gagal: ${data.msg || "Terjadi kesalahan."}`);
+      }
     } catch (error) {
-      console.error("Error:", error);
+      setStatus("❌ Gagal: Periksa koneksi internet.");
     }
   };
 
@@ -57,6 +66,7 @@ export default function Home() {
       <TouchableOpacity style={style.button} onPress={sendPresensi}>
         <Text style={style.buttonText}>Absen</Text>
       </TouchableOpacity>
+      {status ? <Text style={style.statusText}>{status}</Text> : null}
     </>
   );
 }
