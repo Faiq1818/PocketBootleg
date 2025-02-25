@@ -3,9 +3,9 @@ import {
   createStaticNavigation,
   NavigationContainer,
 } from "@react-navigation/native";
-import { View, Platform } from "react-native";
+import { View, Platform, StyleSheet, Text, StatusBar } from "react-native";
 import { useLinkBuilder, useTheme } from "@react-navigation/native";
-import { Text, PlatformPressable } from "@react-navigation/elements";
+import { PlatformPressable } from "@react-navigation/elements";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 //screen
 import Home from "./screen/homeScreen";
@@ -16,7 +16,7 @@ function MyTabBar({ state, descriptors, navigation }) {
   const { buildHref } = useLinkBuilder();
 
   return (
-    <View style={{ flexDirection: "row" }}>
+    <View style={style.notDock}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -49,15 +49,16 @@ function MyTabBar({ state, descriptors, navigation }) {
 
         return (
           <PlatformPressable
+            key={route.key}
             href={buildHref(route.name, route.params)}
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarButtonTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{ flex: 1 }}
+            style={style.dock}
           >
-            <Text style={{ color: isFocused ? colors.primary : colors.text }}>
+            <Text style={{ color: isFocused ? "#999999" : "#373737" }}>
               {label}
             </Text>
           </PlatformPressable>
@@ -69,7 +70,7 @@ function MyTabBar({ state, descriptors, navigation }) {
 
 function HomeScreen() {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={style.forHome}>
       <Home />
     </View>
   );
@@ -77,7 +78,7 @@ function HomeScreen() {
 
 function ProfileScreen() {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={style.forProfileScreen}>
       <QrCodeScanner />
     </View>
   );
@@ -94,5 +95,31 @@ const MyTabs = createBottomTabNavigator({
 const Navigation = createStaticNavigation(MyTabs);
 
 export default function App() {
-  return <Navigation />;
+  return (
+    <>
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
+      <Navigation style={{ backgroundColor: "black" }} />
+    </>
+  );
 }
+
+const style = StyleSheet.create({
+  forHome: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  forProfileScreen: {
+    flex: 1,
+  },
+  notDock: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  dock: {
+    flex: 1,
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+});

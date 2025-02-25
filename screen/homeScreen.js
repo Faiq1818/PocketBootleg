@@ -1,13 +1,62 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 export default function Home() {
+  const [nim, setNim] = useState("");
+  const [token, setToken] = useState("");
+
+  const sendPresensi = async () => {
+    try {
+      const response = await fetch(
+        "https://api.itera.ac.id/v2/presensi/kelas",
+        {
+          method: "POST",
+          headers: {
+            "User-Agent": "Dart/3.2 (dart:io)",
+            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+            Accept: "application/json",
+            "Accept-Encoding": "gzip, deflate, br",
+          },
+          body: new URLSearchParams({
+            token: token,
+            nim: nim,
+          }).toString(),
+        }
+      );
+
+      const data = await response.json();
+      console.log("Response:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <>
       <View style={style.textInputBox}>
-        <TextInput placeholder="Masukan NIM" maxLength={12} />
+        <TextInput
+          placeholder="Masukan NIM"
+          maxLength={12}
+          value={nim}
+          onChangeText={setNim}
+        />
       </View>
       <View style={style.textInputBox}>
-        <TextInput placeholder="Masukan Token" maxLength={12} />
+        <TextInput
+          placeholder="Masukan Token"
+          maxLength={12}
+          value={token}
+          onChangeText={setToken}
+        />
       </View>
+      <TouchableOpacity style={style.button} onPress={sendPresensi}>
+        <Text style={style.buttonText}>Absen</Text>
+      </TouchableOpacity>
     </>
   );
 }
@@ -21,7 +70,15 @@ const style = StyleSheet.create({
     width: 150,
     margin: 10,
   },
-  texto: {
+  button: {
+    borderRadius: 10,
+    backgroundColor: "#373737",
+    padding: 15,
+    paddingHorizontal: 32,
+    alignItems: "center",
+    margin: 10,
+  },
+  buttonText: {
     color: "white",
   },
 });

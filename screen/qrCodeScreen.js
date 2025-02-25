@@ -47,7 +47,7 @@ export default function QrCodeScanner() {
       >
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Text style={styles.text}>Flip Camera</Text>
+            <Text style={styles.text}>Putar Kamera</Text>
           </TouchableOpacity>
         </View>
       </CameraView>
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   text: {
-    fontSize: 24,
+    fontSize: 15,
     fontWeight: "bold",
     color: "white",
   },
