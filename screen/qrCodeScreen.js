@@ -44,6 +44,9 @@ export default function QrCodeScanner() {
         style={styles.camera}
         facing={facing}
         onError={(error) => setCameraError(error.message)}
+        barcodeScannerSettings={{
+          barcodeTypes: ["qr"],
+        }}
       >
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
