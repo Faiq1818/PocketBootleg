@@ -9,7 +9,7 @@ import { PlatformPressable } from "@react-navigation/elements";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 //screen
 import Home from "./screen/homeScreen";
-import QrCodeScanner from "./screen/qrCodeScreen";
+import QrCodeScanner from "./screen/qrCodeScanner";
 
 function MyTabBar({ state, descriptors, navigation }) {
   const { colors } = useTheme();

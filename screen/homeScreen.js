@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+
 export default function Home() {
   const [nim, setNim] = useState("");
   const [token, setToken] = useState("");
