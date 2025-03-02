@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+
 export default function Home() {
   const [nim, setNim] = useState("");
   const [token, setToken] = useState("");
@@ -47,7 +48,7 @@ export default function Home() {
 
   return (
     <>
-      <View style={style.textInputBox}>
+      <View style={style.textInputBoxNIM}>
         <TextInput
           placeholder="Masukan NIM"
           maxLength={12}
@@ -55,10 +56,10 @@ export default function Home() {
           onChangeText={setNim}
         />
       </View>
-      <View style={style.textInputBox}>
+      <View style={style.textInputBoxToken}>
         <TextInput
           placeholder="Masukan Token"
-          maxLength={12}
+          maxLength={25}
           value={token}
           onChangeText={setToken}
         />
@@ -72,12 +73,20 @@ export default function Home() {
 }
 
 const style = StyleSheet.create({
-  textInputBox: {
+  textInputBoxNIM: {
     backgroundColor: "white",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
     width: 150,
+    margin: 10,
+  },
+  textInputBoxToken: {
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+    width: 230,
     margin: 10,
   },
   button: {
