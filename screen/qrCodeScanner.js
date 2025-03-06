@@ -2,11 +2,31 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { CameraView, Camera } from "expo-camera";
 import * as Clipboard from "expo-clipboard";
+import * as ImagePicker from "expo-image-picker";
 
 export default function QrCodeScanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [zoom, setZoom] = useState(0);
+
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.mediaType,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      try {
+        const scanResult = await Camera.scanFromURLAsync(result.assets[0].uri);
+        console.log("Scan Result:", scanResult[0].data);
+      } catch (error) {
+        console.error("Error scanning image:", error);
+      }
+    } else {
+      alert("You did not select any image.");
+    }
+  };
 
   const copyToClipboard = async (data) => {
     await Clipboard.setStringAsync(data);
@@ -53,6 +73,12 @@ export default function QrCodeScanner() {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => setZoom(1)}>
           <Text style={styles.buttonText}>Zoom x1</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => pickImageAsync()}
+        >
+          <Text style={styles.buttonText}>Ambil Gambar</Text>
         </TouchableOpacity>
       </View>
       {scanned && (
