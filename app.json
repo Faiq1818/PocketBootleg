@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "PocketBotleg",
-    "slug": "PocketBotleg",
+    "name": "PocketBootleg",
+    "slug": "PocketBootleg",
     "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

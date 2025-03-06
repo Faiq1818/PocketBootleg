@@ -3,11 +3,27 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { CameraView, Camera } from "expo-camera";
 import * as Clipboard from "expo-clipboard";
 import * as ImagePicker from "expo-image-picker";
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 
 export default function QrCodeScanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [zoom, setZoom] = useState(0);
+  const [savedZoom, setSavedZoom] = useState(0);
+
+  const pinchGesture = Gesture.Pinch()
+    .onUpdate((e) => {
+      let newZoom = savedZoom + (e.scale - 1) * 1;
+      newZoom = Math.max(0, Math.min(newZoom, 1));
+      setZoom(newZoom);
+    })
+    .onEnd(() => {
+      setSavedZoom(zoom);
+    });
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -56,24 +72,19 @@ export default function QrCodeScanner() {
 
   return (
     <View style={styles.container}>
-      <CameraView
-        onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
-        barcodeScannerSettings={{
-          barcodeTypes: ["qr", "pdf417"],
-        }}
-        style={StyleSheet.absoluteFillObject}
-        zoom={zoom}
-      />
+      <GestureHandlerRootView>
+        <GestureDetector gesture={pinchGesture}>
+          <CameraView
+            onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
+            barcodeScannerSettings={{
+              barcodeTypes: ["qr", "pdf417"],
+            }}
+            style={StyleSheet.absoluteFillObject}
+            zoom={zoom}
+          />
+        </GestureDetector>
+      </GestureHandlerRootView>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => setZoom(0)}>
-          <Text style={styles.buttonText}>Zoom x0</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => setZoom(0.5)}>
-          <Text style={styles.buttonText}>Zoom x0.5</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => setZoom(1)}>
-          <Text style={styles.buttonText}>Zoom x1</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => pickImageAsync()}
