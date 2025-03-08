@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "PocketBotleg",
+    "name": "PocketBootleg",
     "slug": "PocketBotleg",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -43,9 +43,9 @@
         }
       ],
       [
-        "expo-barcode-scanner",
+        "expo-image-picker",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
     ],
