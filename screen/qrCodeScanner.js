@@ -36,6 +36,9 @@ export default function QrCodeScanner() {
       try {
         const scanResult = await Camera.scanFromURLAsync(result.assets[0].uri);
         console.log("Scan Result:", scanResult[0].data);
+        setScanned(true);
+        alert(`Token telah disalin, silahkan tempel di input token.`);
+        copyToClipboard(scanResult[0].data);
       } catch (error) {
         console.error("Error scanning image:", error);
       }
@@ -74,24 +77,19 @@ export default function QrCodeScanner() {
     <View style={styles.container}>
       <GestureHandlerRootView>
         <GestureDetector gesture={pinchGesture}>
-          <CameraView
-            onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
-            barcodeScannerSettings={{
-              barcodeTypes: ["qr", "pdf417"],
-            }}
-            style={StyleSheet.absoluteFillObject}
-            zoom={zoom}
-          />
+          <>
+            <CameraView
+              onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
+              barcodeScannerSettings={{
+                barcodeTypes: ["qr", "pdf417"],
+              }}
+              style={StyleSheet.absoluteFillObject}
+              zoom={zoom}
+            />
+          </>
         </GestureDetector>
       </GestureHandlerRootView>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => pickImageAsync()}
-        >
-          <Text style={styles.buttonText}>Ambil Gambar</Text>
-        </TouchableOpacity>
-      </View>
+
       {scanned && (
         <TouchableOpacity
           style={styles.scanAgain}
@@ -100,17 +98,27 @@ export default function QrCodeScanner() {
           <Text style={{ color: "white" }}>Tekan untuk scan lagi</Text>
         </TouchableOpacity>
       )}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => pickImageAsync()}
+        >
+          <Text style={styles.buttonText}>Ambil dari galeri</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   scanAgain: {
-    margin: 72,
+    position: "absolute",
+    alignSelf: "center",
     borderRadius: 10,
     alignItems: "center",
     padding: 20,
     backgroundColor: "#373737",
+    top: "50%",
   },
   container: {
     flex: 1,
