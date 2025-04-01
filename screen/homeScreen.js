@@ -6,8 +6,12 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Dimensions } from "react-native";
+const { width } = Dimensions.get("window");
 
 export default function Home() {
+  const navigation = useNavigation();
   const [nim, setNim] = useState("");
   const [token, setToken] = useState("");
   const [status, setStatus] = useState(""); // State untuk status presensi
@@ -67,6 +71,12 @@ export default function Home() {
       <TouchableOpacity style={style.button} onPress={sendPresensi}>
         <Text style={style.buttonText}>Absen</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={style.button}
+        onPress={() => navigation.navigate("QR")}
+      >
+        <Text style={style.buttonText}>QR</Text>
+      </TouchableOpacity>
       {status ? <Text style={style.statusText}>{status}</Text> : null}
     </>
   );
@@ -78,7 +88,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
-    width: 150,
+    width: width * 0.4,
     margin: 10,
   },
   textInputBoxToken: {
@@ -86,7 +96,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
-    width: 230,
+    width: width * 0.6,
     margin: 10,
   },
   button: {
