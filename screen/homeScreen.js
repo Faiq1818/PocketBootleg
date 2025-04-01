@@ -5,19 +5,21 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from "react-native";
+
 const { width } = Dimensions.get("window");
 
 export default function Home() {
   const navigation = useNavigation();
   const [nim, setNim] = useState("");
   const [token, setToken] = useState("");
-  const [status, setStatus] = useState(""); // State untuk status presensi
+  const [status, setStatus] = useState("");
 
   const sendPresensi = async () => {
-    setStatus("Mengirim..."); // Menampilkan status saat request dikirim
+    setStatus("Mengirim...");
 
     try {
       const response = await fetch(
@@ -68,15 +70,21 @@ export default function Home() {
           onChangeText={setToken}
         />
       </View>
-      <TouchableOpacity style={style.button} onPress={sendPresensi}>
-        <Text style={style.buttonText}>Absen</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={style.button}
-        onPress={() => navigation.navigate("QR")}
-      >
-        <Text style={style.buttonText}>QR</Text>
-      </TouchableOpacity>
+      <View style={style.buttonContainer}>
+        <TouchableOpacity style={style.button} onPress={sendPresensi}>
+          <Text style={style.buttonText}>Absen</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={style.button}
+          onPress={() => navigation.navigate("QR")}
+        >
+          <Image
+            source={require("../assets/qrIcon.png")}
+            style={{ height: 30, width: 30, tintColor: "white" }}
+          />
+          <Text style={style.buttonText}>QR</Text>
+        </TouchableOpacity>
+      </View>
       {status ? <Text style={style.statusText}>{status}</Text> : null}
     </>
   );
@@ -105,9 +113,15 @@ const style = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 32,
     alignItems: "center",
-    margin: 10,
+    margin: 5,
+    flexDirection: "row",
   },
   buttonText: {
     color: "white",
+  },
+  buttonContainer: {
+    flexDirection: "row", // Membuat tombol berada dalam satu baris
+    justifyContent: "space-between", // Memberikan jarak antar tombol
+    marginHorizontal: 10,
   },
 });
