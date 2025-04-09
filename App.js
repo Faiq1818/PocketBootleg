@@ -5,6 +5,7 @@ import { View, Platform, StyleSheet, Text, StatusBar } from "react-native";
 //screen
 import Home from "./screen/homeScreen";
 import QrCodeScanner from "./screen/qrCodeScanner";
+import TokenScreen from "./screen/tokenScreen";
 
 function HomeScreen() {
   return (
@@ -18,6 +19,14 @@ function QRScreen() {
   return (
     <View style={style.forProfileScreen}>
       <QrCodeScanner />
+    </View>
+  );
+}
+
+function TokenScreenApp() {
+  return (
+    <View style={style.forProfileScreen}>
+      <TokenScreen />
     </View>
   );
 }
@@ -36,6 +45,7 @@ function MyStack() {
     >
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="QR" component={QRScreen} />
+      <Stack.Screen name="WithToken" component={TokenScreenApp} />
     </Stack.Navigator>
   );
 }
