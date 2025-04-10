@@ -9,12 +9,21 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("window");
 
 export default function Home() {
   const navigation = useNavigation();
   const [nim, setNim] = useState("");
+
+  const saveNim = async (value) => {
+    try {
+      await AsyncStorage.setItem("my-key", value);
+    } catch (e) {
+      // saving error
+    }
+  };
 
   return (
     <>
@@ -26,15 +35,21 @@ export default function Home() {
           onChangeText={setNim}
         />
       </View>
+
       <View style={style.buttonContainer}>
+        <TouchableOpacity style={style.button1} onPress={() => saveNim(nim)}>
+          <Text style={style.buttonText}>Token</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
-          style={style.button}
+          style={style.button1}
           onPress={() => navigation.navigate("WithToken")}
         >
           <Text style={style.buttonText}>Token</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
-          style={style.button}
+          style={style.button2}
           onPress={() => navigation.navigate("QR")}
         >
           <Image
@@ -65,14 +80,22 @@ const style = StyleSheet.create({
     width: width * 0.6,
     margin: 10,
   },
-  button: {
+  button1: {
     borderRadius: 10,
     backgroundColor: "#373737",
     padding: 15,
     paddingHorizontal: 32,
     alignItems: "center",
     margin: 5,
-    // flexDirection: "row",
+  },
+  button2: {
+    borderRadius: 10,
+    backgroundColor: "#373737",
+    padding: 15,
+    paddingHorizontal: 32,
+    alignItems: "center",
+    margin: 5,
+    flexDirection: "row",
   },
   buttonText: {
     color: "white",
