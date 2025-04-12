@@ -19,9 +19,10 @@ export default function Home() {
 
   const saveNim = async (value) => {
     try {
-      await AsyncStorage.setItem("my-key", value);
+      await AsyncStorage.setItem("my-nim", value);
+      console.log("NIM saved:", value); // Menambahkan log untuk memastikan data disimpan
     } catch (e) {
-      // saving error
+      console.error("Error saving value to AsyncStorage", e);
     }
   };
 
@@ -32,15 +33,14 @@ export default function Home() {
           placeholder="Masukan NIM"
           maxLength={12}
           value={nim}
-          onChangeText={setNim}
+          onChangeText={(text) => {
+            setNim(text);
+            saveNim(text);
+          }}
         />
       </View>
 
       <View style={style.buttonContainer}>
-        <TouchableOpacity style={style.button1} onPress={() => saveNim(nim)}>
-          <Text style={style.buttonText}>Token</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity
           style={style.button1}
           onPress={() => navigation.navigate("WithToken")}

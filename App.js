@@ -17,7 +17,7 @@ function HomeScreen() {
 
 function QRScreen() {
   return (
-    <View style={style.forProfileScreen}>
+    <View style={style.forQrCodeScanner}>
       <QrCodeScanner />
     </View>
   );
@@ -25,7 +25,7 @@ function QRScreen() {
 
 function TokenScreenApp() {
   return (
-    <View style={style.forProfileScreen}>
+    <View style={style.forTokenScreen}>
       <TokenScreen />
     </View>
   );
@@ -72,7 +72,12 @@ const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  forProfileScreen: {
+  forQrCodeScanner: {
     flex: 1,
+  },
+  forTokenScreen: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
