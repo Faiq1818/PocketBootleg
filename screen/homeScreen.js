@@ -6,6 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Modal,
+  Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from "react-native";
@@ -16,6 +18,7 @@ const { width } = Dimensions.get("window");
 export default function Home() {
   const navigation = useNavigation();
   const [nim, setNim] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   const saveNim = async (value) => {
     try {
@@ -58,11 +61,33 @@ export default function Home() {
           />
           <Text style={style.buttonText}>QR</Text>
         </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Hello World!</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
       </View>
     </>
   );
 }
 
+const styles = StyleSheet.create({});
 const style = StyleSheet.create({
   textInputBoxNIM: {
     backgroundColor: "white",

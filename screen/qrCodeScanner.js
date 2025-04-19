@@ -1,19 +1,51 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+  Modal,
+} from "react-native";
 import { CameraView, Camera } from "expo-camera";
-import * as Clipboard from "expo-clipboard";
+// import * as Clipboard from "expo-clipboard";
 import * as ImagePicker from "expo-image-picker";
 import {
   Gesture,
   GestureDetector,
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
+import { sendPresensi } from "../components/SendPresensi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function QrCodeScanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [zoom, setZoom] = useState(0);
+  const [nim, setNim] = useState("");
+  const [status, setStatus] = useState("");
+  const [token, setToken] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
   const [savedZoom, setSavedZoom] = useState(0);
+  const navigation = useNavigation();
+
+  const handlePresensi = () => {
+    sendPresensi(nim, token, setStatus, navigation);
+    setScanned(false);
+  };
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("my-nim");
+      if (value !== null) {
+        setNim(value);
+      }
+    } catch (e) {
+      console.error("Error reading value", e);
+    }
+  };
 
   const pinchGesture = Gesture.Pinch()
     .onUpdate((e) => {
@@ -36,9 +68,8 @@ export default function QrCodeScanner() {
       try {
         const scanResult = await Camera.scanFromURLAsync(result.assets[0].uri);
         console.log("Scan Result:", scanResult[0].data);
-        setScanned(true);
-        alert(`Token telah disalin, silahkan tempel di input token.`);
-        copyToClipboard(scanResult[0].data);
+        setToken(scanResult[0].data);
+        handlePresensi();
       } catch (error) {
         console.error("Error scanning image:", error);
       }
@@ -47,23 +78,29 @@ export default function QrCodeScanner() {
     }
   };
 
-  const copyToClipboard = async (data) => {
-    await Clipboard.setStringAsync(data);
-  };
+  // const copyToClipboard = async (data) => {
+  //   await Clipboard.setStringAsync(data);
+  // };
 
   useEffect(() => {
     const getCameraPermissions = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === "granted");
     };
-
+    2;
     getCameraPermissions();
+    getData();
   }, []);
+
+  useEffect(() => {
+    if (scanned && token) {
+      handlePresensi();
+    }
+  }, [scanned, token, handlePresensi]);
 
   const handleBarcodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Token telah disalin, silahkan tempel di input token.`);
-    copyToClipboard(data);
+    setToken(data);
   };
 
   if (hasPermission === null) {
@@ -90,14 +127,7 @@ export default function QrCodeScanner() {
         </GestureDetector>
       </GestureHandlerRootView>
 
-      {scanned && (
-        <TouchableOpacity
-          style={styles.scanAgain}
-          onPress={() => setScanned(false)}
-        >
-          <Text style={{ color: "white" }}>Tekan untuk scan lagi</Text>
-        </TouchableOpacity>
-      )}
+      {/* {scanned && handlePresensi()} */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
@@ -105,6 +135,15 @@ export default function QrCodeScanner() {
         >
           <Text style={styles.buttonText}>Ambil dari galeri</Text>
         </TouchableOpacity>
+        <Pressable
+          style={[styles.button, styles.buttonOpen]}
+          onPress={() => {
+            setModalVisible(true);
+            navigation.navigate("Home");
+          }}
+        >
+          <Text style={styles.textStyle}>Show Modal</Text>
+        </Pressable>
       </View>
     </View>
   );

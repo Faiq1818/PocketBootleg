@@ -21,6 +21,7 @@ export const sendPresensi = async (nim, token, setStatus, navigation) => {
 
     if (response.ok) {
       setStatus(`✅ Berhasil: ${data.msg || "Presensi berhasil!"}`);
+      navigation.goBack();
     } else {
       setStatus(`❌ Gagal: ${data.msg || "Terjadi kesalahan."}`);
       navigation.goBack();
