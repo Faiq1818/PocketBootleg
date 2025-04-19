@@ -1,4 +1,4 @@
-export const sendPresensi = async (nim, token, setStatus) => {
+export const sendPresensi = async (nim, token, setStatus, navigation) => {
   setStatus("Mengirim...");
 
   try {
@@ -23,6 +23,7 @@ export const sendPresensi = async (nim, token, setStatus) => {
       setStatus(`✅ Berhasil: ${data.msg || "Presensi berhasil!"}`);
     } else {
       setStatus(`❌ Gagal: ${data.msg || "Terjadi kesalahan."}`);
+      navigation.goBack();
     }
   } catch (error) {
     setStatus("❌ Gagal: Periksa koneksi internet.");

@@ -9,6 +9,7 @@ import {
 import { Dimensions } from "react-native";
 import { sendPresensi } from "../components/SendPresensi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
@@ -16,9 +17,10 @@ export default function TokenScreen() {
   const [nim, setNim] = useState("");
   const [status, setStatus] = useState("");
   const [token, setToken] = useState("");
+  const navigation = useNavigation();
 
   const handlePresensi = () => {
-    sendPresensi(nim, token, setStatus);
+    sendPresensi(nim, token, setStatus, navigation);
   };
 
   const getData = async () => {
