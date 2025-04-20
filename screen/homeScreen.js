@@ -69,6 +69,8 @@ export default function Home({ route }) {
           />
           <Text style={style.buttonText}>QR</Text>
         </TouchableOpacity>
+
+        {/* Modal pop up */}
         <Modal
           animationType="slide"
           transparent={true}
@@ -87,6 +89,7 @@ export default function Home({ route }) {
             </View>
           </View>
         </Modal>
+        {/*  */}
       </View>
     </>
   );

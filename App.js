@@ -46,7 +46,7 @@ function MyStack() {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        initialParams={{ showModal: false }}
+        initialParams={{ showModal: 0 }}
       />
       <Stack.Screen name="QR" component={QRScreen} />
       <Stack.Screen name="WithToken" component={TokenScreenApp} />

@@ -21,10 +21,10 @@ export const sendPresensi = async (nim, token, setStatus, navigation) => {
 
     if (response.ok) {
       setStatus(`✅ Berhasil: ${data.msg || "Presensi berhasil!"}`);
-      navigation.popTo("Home", { showModal: true });
+      // navigation.popTo("Home", { showModal: true });
     } else {
       setStatus(`❌ Gagal: ${data.msg || "Terjadi kesalahan."}`);
-      navigation.popTo("Home", { showModal: true });
+      navigation.popTo("Home", { showModal: Date.now() });
     }
   } catch (error) {
     setStatus("❌ Gagal: Periksa koneksi internet.");
