@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import LottieView from "lottie-react-native";
 import {
   View,
   Text,
@@ -82,9 +83,18 @@ export default function Home({ route }) {
         >
           <View style={style.modalCenteredView}>
             <View style={style.modalView}>
-              <Text style={style.modalText}>Hello World!</Text>
-              <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>Hide Modal</Text>
+              <LottieView
+                source={require("/home/faiqge/PocketBootleg/assets/animations/Animation-Done.json")}
+                style={{ width: "70%", height: "70%" }}
+                autoPlay
+                loop={false}
+              />
+              <Text style={style.modalText}>Presensi selesai!</Text>
+              <Pressable
+                style={style.modalHideButton}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={{ color: "white" }}>Okay!</Text>
               </Pressable>
             </View>
           </View>
@@ -95,7 +105,6 @@ export default function Home({ route }) {
   );
 }
 
-const styles = StyleSheet.create({});
 const style = StyleSheet.create({
   textInputBoxNIM: {
     backgroundColor: "white",
@@ -135,10 +144,17 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   modalView: {
-    backgroundColor: "red",
+    backgroundColor: "white",
     width: windowWidth * 0.8,
     height: windowHeight * 0.4,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 15,
+  },
+  modalHideButton: {
+    margin: 10,
+    backgroundColor: "#373737",
+    padding: 10,
+    borderRadius: 10,
   },
 });
