@@ -7,10 +7,10 @@ import Home from "./screen/homeScreen";
 import QrCodeScanner from "./screen/qrCodeScanner";
 import TokenScreen from "./screen/tokenScreen";
 
-function HomeScreen() {
+function HomeScreen({ route }) {
   return (
     <View style={style.forHome}>
-      <Home />
+      <Home route={route} />
     </View>
   );
 }
@@ -43,7 +43,11 @@ function MyStack() {
         headerTitleAlign: "center",
       }}
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        initialParams={{ showModal: false }}
+      />
       <Stack.Screen name="QR" component={QRScreen} />
       <Stack.Screen name="WithToken" component={TokenScreenApp} />
     </Stack.Navigator>

@@ -8,7 +8,6 @@ import {
   Modal,
 } from "react-native";
 import { CameraView, Camera } from "expo-camera";
-// import * as Clipboard from "expo-clipboard";
 import * as ImagePicker from "expo-image-picker";
 import {
   Gesture,
@@ -18,7 +17,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { sendPresensi } from "../components/SendPresensi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function QrCodeScanner() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -27,7 +25,6 @@ export default function QrCodeScanner() {
   const [nim, setNim] = useState("");
   const [status, setStatus] = useState("");
   const [token, setToken] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
   const [savedZoom, setSavedZoom] = useState(0);
   const navigation = useNavigation();
 
@@ -78,10 +75,6 @@ export default function QrCodeScanner() {
     }
   };
 
-  // const copyToClipboard = async (data) => {
-  //   await Clipboard.setStringAsync(data);
-  // };
-
   useEffect(() => {
     const getCameraPermissions = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -127,7 +120,6 @@ export default function QrCodeScanner() {
         </GestureDetector>
       </GestureHandlerRootView>
 
-      {/* {scanned && handlePresensi()} */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
@@ -135,15 +127,6 @@ export default function QrCodeScanner() {
         >
           <Text style={styles.buttonText}>Ambil dari galeri</Text>
         </TouchableOpacity>
-        <Pressable
-          style={[styles.button, styles.buttonOpen]}
-          onPress={() => {
-            setModalVisible(true);
-            navigation.navigate("Home");
-          }}
-        >
-          <Text style={styles.textStyle}>Show Modal</Text>
-        </Pressable>
       </View>
     </View>
   );

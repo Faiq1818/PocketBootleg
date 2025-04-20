@@ -14,8 +14,10 @@ import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("window");
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
-export default function Home() {
+export default function Home({ route }) {
   const navigation = useNavigation();
   const [nim, setNim] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -23,11 +25,17 @@ export default function Home() {
   const saveNim = async (value) => {
     try {
       await AsyncStorage.setItem("my-nim", value);
-      console.log("NIM saved:", value); // Menambahkan log untuk memastikan data disimpan
+      console.log("NIM saved:", value);
     } catch (e) {
       console.error("Error saving value to AsyncStorage", e);
     }
   };
+
+  React.useEffect(() => {
+    if (route.params?.showModal) {
+      setModalVisible(true);
+    }
+  }, [route.params?.showModal]);
 
   return (
     <>
@@ -70,13 +78,10 @@ export default function Home() {
             setModalVisible(!modalVisible);
           }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
+          <View style={style.modalCenteredView}>
+            <View style={style.modalView}>
+              <Text style={style.modalText}>Hello World!</Text>
+              <Pressable onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={styles.textStyle}>Hide Modal</Text>
               </Pressable>
             </View>
@@ -95,14 +100,6 @@ const style = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 8,
     width: width * 0.4,
-    margin: 10,
-  },
-  textInputBoxToken: {
-    backgroundColor: "white",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-    width: width * 0.6,
     margin: 10,
   },
   button1: {
@@ -126,8 +123,19 @@ const style = StyleSheet.create({
     color: "white",
   },
   buttonContainer: {
-    // flexDirection: "row", // Membuat tombol berada dalam satu baris
     justifyContent: "space-between",
     marginHorizontal: 10,
+  },
+  modalCenteredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalView: {
+    backgroundColor: "red",
+    width: windowWidth * 0.8,
+    height: windowHeight * 0.4,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

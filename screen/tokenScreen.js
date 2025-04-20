@@ -35,7 +35,6 @@ export default function TokenScreen() {
   };
 
   useEffect(() => {
-    // Panggil getData ketika komponen pertama kali di-render
     getData();
   }, []);
 
