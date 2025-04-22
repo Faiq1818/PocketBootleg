@@ -66,7 +66,7 @@ export default function Home({ route }) {
         >
           <Image
             source={require("../assets/qrIcon.png")}
-            style={{ height: 30, width: 30, tintColor: "white" }}
+            style={style.qrScannerIcon}
           />
           <Text style={style.buttonText}>QR</Text>
         </TouchableOpacity>
@@ -108,8 +108,8 @@ export default function Home({ route }) {
 const style = StyleSheet.create({
   textInputBoxNIM: {
     backgroundColor: "white",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: windowWidth * 0.05,
+    paddingVertical: windowHeight * 0.015,
     borderRadius: 8,
     width: width * 0.4,
     margin: 10,
@@ -117,16 +117,17 @@ const style = StyleSheet.create({
   button1: {
     borderRadius: 10,
     backgroundColor: "#373737",
-    padding: 15,
-    paddingHorizontal: 32,
+    // padding: 15
+    paddingVertical: windowHeight * 0.02,
+    paddingHorizontal: windowWidth * 0.1,
     alignItems: "center",
     margin: 5,
   },
   button2: {
     borderRadius: 10,
     backgroundColor: "#373737",
-    padding: 15,
-    paddingHorizontal: 32,
+    paddingVertical: windowHeight * 0.015,
+    paddingHorizontal: windowWidth * 0.1,
     alignItems: "center",
     margin: 5,
     flexDirection: "row",
@@ -151,10 +152,19 @@ const style = StyleSheet.create({
     alignItems: "center",
     borderRadius: 15,
   },
+  modalText: {
+    // fontWeight:
+  },
   modalHideButton: {
-    margin: 10,
+    margin: 15,
     backgroundColor: "#373737",
-    padding: 10,
-    borderRadius: 10,
+    paddingVertical: windowHeight * 0.017,
+    paddingHorizontal: windowWidth * 0.07,
+    borderRadius: 11,
+  },
+  qrScannerIcon: {
+    height: windowHeight * 0.04,
+    width: windowHeight * 0.04,
+    tintColor: "white",
   },
 });

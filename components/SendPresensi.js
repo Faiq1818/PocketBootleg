@@ -24,7 +24,6 @@ export const sendPresensi = async (nim, token, setStatus, navigation) => {
       navigation.popTo("Home", { showModal: Date.now() });
     } else {
       setStatus(`❌ Gagal: ${data.msg || "Terjadi kesalahan."}`);
-      navigation.popTo("Home", { showModal: Date.now() });
     }
   } catch (error) {
     setStatus("❌ Gagal: Periksa koneksi internet.");
