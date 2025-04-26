@@ -14,7 +14,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const { width } = Dimensions.get("window");
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -84,7 +83,7 @@ export default function Home({ route }) {
           <View style={style.modalCenteredView}>
             <View style={style.modalView}>
               <LottieView
-                source={require("/home/faiqge/PocketBootleg/assets/animations/Animation-Done.json")}
+                source={require("../assets/animations/Animation-Done.json")}
                 style={{ width: "70%", height: "70%" }}
                 autoPlay
                 loop={false}
@@ -111,7 +110,7 @@ const style = StyleSheet.create({
     paddingHorizontal: windowWidth * 0.05,
     paddingVertical: windowHeight * 0.015,
     borderRadius: 8,
-    width: width * 0.4,
+    width: windowWidth * 0.4,
     margin: 10,
   },
   button1: {

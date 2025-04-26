@@ -11,7 +11,8 @@ import { sendPresensi } from "../components/SendPresensi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
-const { width } = Dimensions.get("window");
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default function TokenScreen() {
   const [nim, setNim] = useState("");
@@ -62,14 +63,14 @@ const style = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
-    width: width * 0.6,
+    width: windowWidth * 0.6,
     margin: 10,
   },
   buttonPresensi: {
     borderRadius: 10,
     backgroundColor: "#373737",
-    padding: 15,
-    paddingHorizontal: 32,
+    paddingVertical: windowHeight * 0.015,
+    paddingHorizontal: windowWidth * 0.1,
     alignItems: "center",
     margin: 5,
   },
